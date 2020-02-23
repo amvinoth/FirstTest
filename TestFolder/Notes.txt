@@ -1,0 +1,139 @@
+
+
+@Transactional( propagation = Propagation.SUPPORTS,readOnly = true )
+
+		<dependency>
+    		<groupId>com.fasterxml.jackson.datatype</groupId>
+    		<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+
+spring.datasource.url= jdbc:mysql://localhost:3306/ecommerce
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=create
+
+spring.jpa.show-sql=true
+--------------------------------------------------
+Ex : https://www.baeldung.com/jpa-composite-primary-keys
+
+In order to define the composite primary keys, we should follow some rules:
+
+The composite primary key class must be public
+It must have a no-arg constructor
+It must define equals() and hashCode() methods
+It must be Serializable
+
+@EmbeddedId is an alternative to the @IdClass annotation.
+@Embeddable
+
+@Embeddable
+public class BookId implements Serializable {
+    private String title;
+    private String language;
+ 
+    // default constructor
+ 
+    public BookId(String title, String language) {
+        this.title = title;
+        this.language = language;
+    }
+ 
+    // getters, equals() and hashCode() methods
+}
+Then, we need to embed this class in the Book entity using @EmbeddedId:
+
+@Entity
+public class Book {
+    @EmbeddedId
+    private BookId bookId;
+ 
+    // constructors, other fields, getters and setters
+}
+
+------------------------------------------------------Reason for overide equals(), hashCode()
+You are here: Home / Hibernate / Hibernate Advanced / Equals and HashCode Methods in Hibernate - All you need to know
+Equals and HashCode Methods in Hibernate - All you need to know
+By Thorben Janssen 2 Comments
+
+Do you live in Europe?
+Then I hope to see you at one of my in-person workshops in 2020:
+JPA for Beginners Workshop? (2020/06/30-2020/07/01)
+Data and Communication Patterns for Microservices? (2020/09/15-2020/09/17)
+Advanced Hibernate Workshop (2020/12/08-2020/12/10)
+  
+tweet 
+share 
+share 
+share 
+share 
+email 
+
+The implementation of the equals() and hashCode() methods for entity classes is an often discussed question.
+
+Do you really need them? There are lots of applications that work perfectly fine using Java’s default methods provided by the Object class.
+
+And if you need to implement them, how should you do that? Should you use all attributes or just the primary keys?
+
+I get questions like these in almost all of my on-site workshops and at conferences. So, it’s about time to answer them once and for all in this article.
+
+Don’t want to read? You can watch it here!
+
+
+
+When and Why you need to Implement equals() and hashCode()
+As so often in software development, the correct answer to these questions is: It depends …
+
+If you take a look at the JPA specification, you will be surprised to only find 2 explicit and 1 implicit mention of both methods:
+
+You need to implement the equals() and hashCode() methods for primary key classes if you map composite primary keys.
+If you map an association to a Map, your map key needs to implement the equals() and hashCode() methods. So, if use an entity as the key, it needs to provide both methods.
+You can map one-to-many and many-to-many associations to different sub-types of Collection. If you use a Set, your entities have to have equals() and hashCode() methods.
+Unfortunately, only the first reference provides a clear indication that you need to implement equals() and hashCode() methods for primary key classes. Otherwise, 2 different instances of your primary key object, that have the same attribute values, would be equal in the database but not in your Java code.
+
+
+---------------------------Front End Code----------------**************************************************
+
+
+We could hardcode the URLs to localhost:8080, of course, but that's not something we want to do. Instead, when working with different domains, we should create a file named proxy-conf.json in our /frontend folder:
+{
+    "/api": {
+        "target": "http://localhost:8080",
+        "secure": false
+    }
+}
+And then we need to open package.json and change scripts.start property to match:
+
+"scripts": {
+    ...
+    "start": "ng serve --proxy-config proxy-conf.json",
+    ...
+  }
+And now we just should keep in mind to start the application with npm start instead ng serve.
+
+
+-----------------------------------------
+Run ng generate component component-name to generate a new component. You can also use ng generate directive|pipe|service|class|guard|interface|enum|module.
+
+ng generate class hero --type=model
+
+hero.model.ts
+
+--
+ng g c ecommerce
+ ng g c /ecommerce/products
+ng g c /ecommerce/orders
+ ng g c /ecommerce/shopping-cart
+ng g class /ecommerce/models/product --type=model
+ ng g class /ecommerce/models/product-order --type=model
+ng g class /ecommerce/models/product-orders --type=model
+ng g s /ecommerce/services/EcommerceService
+
+ insert into product values(NULL,"TV","/images/tv.png",200)
+ insert into product values(NULL,"Beer","/images/tv.png",200);
+ insert into product values(NULL,"Icecream","/images/tv.png",200);
+ insert into product values(NULL,"book","/images/tv.png",200);
+-----------------
+ http://localhost:4200/api/orders
+
+{"productOrders":[{"product":{"id":1,"name":"TV","price":200,"pictureUrl":"/images/tv.jpg"},"quantity":1}]}
+
