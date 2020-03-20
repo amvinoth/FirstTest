@@ -1,0 +1,40 @@
+
+
+Set up Git:
+git config --global user.name "amvinoth"
+git config --global user.email amvinothkumar6@gmail.com
+
+Transfer project files to PC:
+
+git clone https://github.com/amvinoth/FirstTest.git
+
+
+
+
+Transfer Project files from PC to GitHub
+
+git add (file name)
+git commit - (cmmitted message) files name
+git push -u origin master
+git remote add origin masteer (url)g
+
+
+git add (file name)
+git commit - (cmmitted message) files name
+git push -u origin master
+git remote add origin masteer (url)g
+
+
+--------------------------------
+
+release/March_2020
+deno.java
+1.method
+
+feature/vinoth_Branch
+demo.java --> Mehod
+
+feature/Pratop{_btrnch
+demo.java 
+method.
+
